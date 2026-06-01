@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resumo Financeiro - Reforma e Mudança</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f6f9;
+            color: #333;
+            padding: 18px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .header {
+            background: #1e3c72;
+            color: white;
+            padding: 26px;
+            border-radius: 12px;
+            margin-bottom: 18px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 15px;
+            opacity: 0.95;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .card {
+            min-width: 0;
+            background: white;
+            padding: 16px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+            transition: 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            color: #666;
+            margin-bottom: 12px;
+            font-size: 15px;
+        }
+
+        .value {
+            font-size: 22px;
+            font-weight: bold;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 1.1;
+        }
+
+        .positive {
+            color: #0b8f3a;
+        }
+
+        .negative {
+            color: #d62828;
+        }
+
+        .section {
+            background: white;
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+        }
+
+        .section h2 {
+            color: #1e3c72;
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            padding: 9px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background: #1e3c72 !important;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
+            color: white;
+        }
+
+        tr:hover {
+            background: #f7f9fc;
+        }
+
+        .highlight {
+            margin-top: 12px;
+            background: #eef4ff;
+            border-left: 6px solid #2a5298;
+            padding: 14px;
+            border-radius: 10px;
+            line-height: 1.5;
+            font-size: 14px;
+        }
+
+        .footer {
+            text-align: center;
+            color: #777;
+            margin-top: 18px;
+            padding-bottom: 20px;
+        }
+
+        @media print {
+            @page {
+                size: A4;
+                margin: 12mm;
+            }
+
+            body {
+                background: white;
+                padding: 0;
+                font-size: 11px;
+            }
+
+            .container {
+                max-width: 100%;
+            }
+
+            button {
+                display: none;
+            }
+
+            .header {
+                background: #1e3c72 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                box-shadow: none;
+                padding: 18px;
+                margin-bottom: 12px;
+                page-break-after: avoid;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .cards {
+                gap: 8px;
+                margin-bottom: 12px;
+                page-break-inside: avoid;
+            }
+
+            .card {
+                box-shadow: none;
+                border: 1px solid #ccc;
+                padding: 10px;
+            }
+
+            .section {
+                box-shadow: none;
+                border: 1px solid #ddd;
+                margin-bottom: 12px;
+                padding: 12px;
+                page-break-inside: auto;
+                break-inside: auto;
+            }
+
+            .section h2 {
+                font-size: 18px;
+                margin-bottom: 10px;
+            }
+
+            table {
+                margin-top: 6px;
+                page-break-inside: auto;
+            }
+
+            tr {
+                page-break-inside: avoid;
+            }
+
+            th, td {
+                padding: 6px;
+                font-size: 11px;
+            }
+
+            .highlight {
+                padding: 10px;
+                font-size: 11px;
+                margin-top: 8px;
+            }
+
+            .footer {
+                margin-top: 10px;
+                font-size: 10px;
+            }
+        }
+
+        @media(max-width: 900px) {
+            .cards {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+        }
+
+        @media(max-width: 768px) {
+            .cards {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: 8px;
+            }
+
+            .card {
+                padding: 10px;
+            }
+
+            .card h3 {
+                font-size: 12px;
+                margin-bottom: 6px;
+            }
+
+            .value {
+                font-size: 16px;
+            }
+
+            body {
+                padding: 15px;
+            }
+
+            .header h1 {
+                font-size: 30px;
+            }
+
+            .value {
+                font-size: 28px;
+            }
+
+            table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <div style="display:flex; justify-content:flex-end; margin-bottom:10px;">
+        <button onclick="window.print()" style="background:#1e3c72; color:white; border:none; padding:10px 18px; border-radius:8px; cursor:pointer; font-size:14px; font-weight:bold;">
+            Imprimir / Salvar PDF
+        </button>
+    </div>
+
+    <div class="header">
+        <h1>Resumo Financeiro</h1>
+        <p>Reforma e Mudança da Igreja</p>
+    </div>
+
+    <div class="cards">
+        <div class="card">
+            <h3>Total de Receitas</h3>
+            <div class="value positive">R$ 47.449,37</div>
+        </div>
+
+        <div class="card">
+            <h3>Total de Despesas</h3>
+            <div class="value negative">R$ 51.601,68</div>
+        </div>
+
+        <div class="card">
+            <h3>Saldo Final</h3>
+            <div class="value negative">R$ 4.152,31</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Receitas</h2>
+
+        <table>
+            <thead>
+            <tr>
+                <th>Origem</th>
+                <th>Valor</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr><td>AICEB</td><td>R$ 5.000,00</td></tr>
+            <tr><td>DLOM</td><td>R$ 2.387,77</td></tr>
+            <tr><td>DLJ</td><td>R$ 915,00</td></tr>
+            <tr><td>DREM-NE</td><td>R$ 300,00</td></tr>
+            <tr><td>Igrejas</td><td>R$ 13.329,00</td></tr>
+            <tr><td>Individual</td><td>R$ 10.305,00</td></tr>
+            <tr><td>Empréstimo</td><td>R$ 15.212,60</td></tr>
+            </tbody>
+        </table>
+
+        <h2 style="margin-top:30px; page-break-before: avoid; break-before: avoid;">Empréstimo</h2>
+
+        <table style="page-break-before: avoid; break-before: avoid;">
+            <thead>
+            <tr>
+                <th>Descrição</th>
+                <th>Valor</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr><td>Reserva da Piscina</td><td>R$ 6.275,00</td></tr>
+            <tr><td>AICEB</td><td>R$ 8.000,00</td></tr>
+            <tr><td>FGTM</td><td>R$ 937,60</td></tr>
+            </tbody>
+        </table>
+
+        <div class="highlight">
+            As receitas foram compostas principalmente por contribuições de igrejas parceiras, ofertas individuais e apoio institucional. Houve também necessidade de complementação através de empréstimos para garantir a continuidade da reforma e da mudança.
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Despesas</h2>
+
+        <table>
+            <thead>
+            <tr>
+                <th>Categoria</th>
+                <th>Valor</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr><td>Mão de Obra</td><td>R$ 31.126,00</td></tr>
+            <tr><td>Material</td><td>R$ 12.443,42</td></tr>
+            <tr><td>Outros Custos</td><td>R$ 8.032,26</td></tr>
+            </tbody>
+        </table>
+
+        <h2 style="margin-top:30px;">Outros Custos</h2>
+
+        <table>
+            <thead>
+            <tr>
+                <th>Descrição</th>
+                <th>Valor</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr><td>Águas de Teresina</td><td>R$ 161,97</td></tr>
+            <tr><td>Combustível</td><td>R$ 200,00</td></tr>
+            <tr><td>Engenharia</td><td>R$ 2.750,00</td></tr>
+            <tr><td>Entrega das Chaves</td><td>R$ 4.500,00</td></tr>
+            <tr><td>Equatorial PI</td><td>R$ 321,87</td></tr>
+            <tr><td>Impressão de Documentos</td><td>R$ 8,00</td></tr>
+            <tr><td>Reconhecimento de Firma</td><td>R$ 55,53</td></tr>
+            <tr><td>SDU</td><td>R$ 34,89</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="section">
+        <h2>Considerações Gerais</h2>
+
+        <div class="highlight">
+            O projeto de reforma e mudança exigiu um investimento significativo da igreja, principalmente em mão de obra e adequações estruturais.
+            <br>
+            Apesar do saldo negativo momentâneo de R$ 5.067,31, observamos um forte apoio vindo de igrejas parceiras, irmãos e instituições, demonstrando união e comprometimento com esta nova fase.
+            <br>
+            O valor obtido através de empréstimos teve papel importante para garantir a conclusão das etapas mais urgentes da mudança e adequação do novo espaço.
+            <br>
+            Este investimento representa não apenas uma mudança estrutural, mas também um avanço ministerial e organizacional para a igreja, criando melhores condições para receber os irmãos e expandir as atividades futuras.
+        </div>
+    </div>
+
+    <div class="footer">
+        Relatório Financeiro — Reforma e Mudança da Igreja
+    </div>
+
+</div>
+
+</body>
+</html>
