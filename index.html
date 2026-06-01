@@ -16,7 +16,7 @@
         body {
             background: #f4f6f9;
             color: #333;
-            padding: 18px;
+            padding: clamp(12px, 2vw, 18px);
         }
 
         .container {
@@ -35,7 +35,7 @@
         }
 
         .header h1 {
-            font-size: 32px;
+            font-size: clamp(24px, 4vw, 32px);
             margin-bottom: 10px;
         }
 
@@ -46,7 +46,7 @@
 
         .cards {
             display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 12px;
             margin-bottom: 18px;
         }
@@ -71,7 +71,7 @@
         }
 
         .value {
-            font-size: 22px;
+            font-size: clamp(18px, 2.2vw, 24px);
             font-weight: bold;
             white-space: nowrap;
             overflow: hidden;
@@ -84,6 +84,14 @@
         }
 
         .negative {
+            color: #d62828;
+        }
+
+        .value-cell {
+            font-weight: bold;
+        }
+
+        .value-cell.is-negative {
             color: #d62828;
         }
 
@@ -101,6 +109,16 @@
             font-size: 22px;
         }
 
+        .receitas-table tbody td:last-child {
+            color: #0b8f3a;
+            font-weight: bold;
+        }
+
+        .despesas-table tbody td:last-child {
+            color: #d62828;
+            font-weight: bold;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
@@ -111,6 +129,12 @@
             padding: 9px;
             border-bottom: 1px solid #ddd;
             text-align: left;
+        }
+
+        table th:last-child,
+        table td:last-child {
+            text-align: right;
+            white-space: nowrap;
         }
 
         th {
@@ -227,15 +251,9 @@
             }
         }
 
-        @media(max-width: 900px) {
+        @media (max-width: 768px) {
             .cards {
-                grid-template-columns: repeat(3, minmax(0, 1fr));
-            }
-        }
-
-        @media(max-width: 768px) {
-            .cards {
-                grid-template-columns: repeat(3, minmax(0, 1fr));
+                grid-template-columns: 1fr;
                 gap: 8px;
             }
 
@@ -249,25 +267,74 @@
             }
 
             .value {
-                font-size: 16px;
+                font-size: 20px;
             }
 
-            body {
-                padding: 15px;
+            .header {
+                padding: 18px 14px;
             }
 
-            .header h1 {
-                font-size: 30px;
+            .section {
+                padding: 12px;
             }
 
-            .value {
-                font-size: 28px;
+            .section h2 {
+                font-size: 18px;
+                margin-bottom: 12px;
+            }
+
+            table,
+            thead,
+            tbody,
+            th,
+            td,
+            tr {
+                display: block;
+            }
+
+            thead {
+                display: none;
             }
 
             table {
-                display: block;
-                overflow-x: auto;
+                width: 100%;
+                margin-top: 8px;
             }
+
+            tbody tr {
+                background: #fff;
+                border: 1px solid #e5e7eb;
+                border-radius: 10px;
+                padding: 8px 10px;
+                margin-bottom: 8px;
+            }
+
+            tbody td {
+                border: none;
+                border-bottom: 1px dashed #e5e7eb;
+                padding: 8px 0;
+                display: flex;
+                justify-content: space-between;
+                gap: 12px;
+                white-space: normal;
+            }
+
+            tbody td:last-child {
+                border-bottom: none;
+            }
+
+            tbody td::before {
+                content: attr(data-label);
+                color: #6b7280;
+                font-weight: bold;
+                flex: 0 0 auto;
+            }
+
+            tbody td:last-child,
+            tbody td:last-child::before {
+                font-weight: bold;
+            }
+
         }
     </style>
 </head>
@@ -306,7 +373,7 @@
     <div class="section">
         <h2>Receitas</h2>
 
-        <table>
+        <table class="receitas-table">
             <thead>
             <tr>
                 <th>Origem</th>
@@ -314,19 +381,19 @@
             </tr>
             </thead>
             <tbody>
-            <tr><td>AICEB</td><td>R$ 5.000,00</td></tr>
-            <tr><td>DLOM</td><td>R$ 2.387,77</td></tr>
-            <tr><td>DLJ</td><td>R$ 915,00</td></tr>
-            <tr><td>DREM-NE</td><td>R$ 300,00</td></tr>
-            <tr><td>Igrejas</td><td>R$ 13.329,00</td></tr>
-            <tr><td>Individual</td><td>R$ 10.305,00</td></tr>
-            <tr><td>Empréstimo</td><td>R$ 15.212,60</td></tr>
+            <tr><td data-label="Origem">AICEB</td><td data-label="Valor">R$ 5.000,00</td></tr>
+            <tr><td data-label="Origem">DLOM</td><td data-label="Valor">R$ 2.387,77</td></tr>
+            <tr><td data-label="Origem">DLJ</td><td data-label="Valor">R$ 915,00</td></tr>
+            <tr><td data-label="Origem">DREM-NE</td><td data-label="Valor">R$ 300,00</td></tr>
+            <tr><td data-label="Origem">Igrejas</td><td data-label="Valor">R$ 13.329,00</td></tr>
+            <tr><td data-label="Origem">Individual</td><td data-label="Valor">R$ 10.305,00</td></tr>
+            <tr><td data-label="Origem">Empréstimo</td><td data-label="Valor">R$ 15.212,60</td></tr>
             </tbody>
         </table>
 
         <h2 style="margin-top:30px; page-break-before: avoid; break-before: avoid;">Empréstimo</h2>
 
-        <table style="page-break-before: avoid; break-before: avoid;">
+        <table class="receitas-table" style="page-break-before: avoid; break-before: avoid;">
             <thead>
             <tr>
                 <th>Descrição</th>
@@ -334,9 +401,9 @@
             </tr>
             </thead>
             <tbody>
-            <tr><td>Reserva da Piscina</td><td>R$ 6.275,00</td></tr>
-            <tr><td>AICEB</td><td>R$ 8.000,00</td></tr>
-            <tr><td>FGTM</td><td>R$ 937,60</td></tr>
+            <tr><td data-label="Descrição">Reserva da Piscina</td><td data-label="Valor">R$ 6.275,00</td></tr>
+            <tr><td data-label="Descrição">AICEB</td><td data-label="Valor">R$ 8.000,00</td></tr>
+            <tr><td data-label="Descrição">FGTM</td><td data-label="Valor">R$ 937,60</td></tr>
             </tbody>
         </table>
 
@@ -348,7 +415,7 @@
     <div class="section">
         <h2>Despesas</h2>
 
-        <table>
+        <table class="despesas-table">
             <thead>
             <tr>
                 <th>Categoria</th>
@@ -356,15 +423,15 @@
             </tr>
             </thead>
             <tbody>
-            <tr><td>Mão de Obra</td><td>R$ 31.126,00</td></tr>
-            <tr><td>Material</td><td>R$ 12.443,42</td></tr>
-            <tr><td>Outros Custos</td><td>R$ 8.032,26</td></tr>
+            <tr><td data-label="Categoria">Mão de Obra</td><td data-label="Valor">R$ 31.126,00</td></tr>
+            <tr><td data-label="Categoria">Material</td><td data-label="Valor">R$ 12.443,42</td></tr>
+            <tr><td data-label="Categoria">Outros Custos</td><td data-label="Valor">R$ 8.032,26</td></tr>
             </tbody>
         </table>
 
         <h2 style="margin-top:30px;">Outros Custos</h2>
 
-        <table>
+        <table class="despesas-table">
             <thead>
             <tr>
                 <th>Descrição</th>
@@ -372,14 +439,14 @@
             </tr>
             </thead>
             <tbody>
-            <tr><td>Águas de Teresina</td><td>R$ 161,97</td></tr>
-            <tr><td>Combustível</td><td>R$ 200,00</td></tr>
-            <tr><td>Engenharia</td><td>R$ 2.750,00</td></tr>
-            <tr><td>Entrega das Chaves</td><td>R$ 4.500,00</td></tr>
-            <tr><td>Equatorial PI</td><td>R$ 321,87</td></tr>
-            <tr><td>Impressão de Documentos</td><td>R$ 8,00</td></tr>
-            <tr><td>Reconhecimento de Firma</td><td>R$ 55,53</td></tr>
-            <tr><td>SDU</td><td>R$ 34,89</td></tr>
+            <tr><td data-label="Descrição">Águas de Teresina</td><td data-label="Valor">R$ 161,97</td></tr>
+            <tr><td data-label="Descrição">Combustível</td><td data-label="Valor">R$ 200,00</td></tr>
+            <tr><td data-label="Descrição">Engenharia</td><td data-label="Valor">R$ 2.750,00</td></tr>
+            <tr><td data-label="Descrição">Entrega das Chaves</td><td data-label="Valor">R$ 4.500,00</td></tr>
+            <tr><td data-label="Descrição">Equatorial PI</td><td data-label="Valor">R$ 321,87</td></tr>
+            <tr><td data-label="Descrição">Impressão de Documentos</td><td data-label="Valor">R$ 8,00</td></tr>
+            <tr><td data-label="Descrição">Reconhecimento de Firma</td><td data-label="Valor">R$ 55,53</td></tr>
+            <tr><td data-label="Descrição">SDU</td><td data-label="Valor">R$ 34,89</td></tr>
             </tbody>
         </table>
     </div>
